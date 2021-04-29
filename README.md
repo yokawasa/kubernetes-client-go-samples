@@ -7,7 +7,7 @@ A collection of kubernetes client-go samples
 - [List Nodes](list-nodes)
 - [List Pods](list-pods)
 - [List Pods in Service](pods-in-svc)
-- [List Istio Virtual Services](istio-list-vs)
+- [Get Istio Virtual Services](istio-get-vs)
 
 
 ## Develop modules

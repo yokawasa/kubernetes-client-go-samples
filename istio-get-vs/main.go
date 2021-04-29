@@ -22,8 +22,12 @@ var (
 
 func main() {
 
-	var namespace string
-	flag.StringVar(&namespace, "n", "default", "namespace value")
+	var (
+		namespace string
+		name      string
+	)
+	flag.StringVar(&namespace, "namespace", "default", "namespace")
+	flag.StringVar(&name, "name", "", "virtual service name")
 	flag.Parse()
 
 	// create kubernetes client
@@ -32,14 +36,26 @@ func main() {
 		log.Fatalf("Failed to create istio client: %s", err)
 	}
 
-	// Print all VirtualServices
-	vsList, err := client.NetworkingV1alpha3().VirtualServices(namespace).List(context.TODO(), v1.ListOptions{})
-	if err != nil {
-		log.Fatalf("Failed to get VirtualService in %s namespace: %s", namespace, err)
-	}
-	for i := range vsList.Items {
-		vs := vsList.Items[i]
+	if name != "" {
+		log.Printf("Get VirtualService: %v (namespace: %v)\n", name, namespace)
+		// Get VirtualService
+		vs, err := client.NetworkingV1alpha3().VirtualServices(namespace).Get(context.TODO(), name, v1.GetOptions{})
+		if err != nil {
+			log.Fatalf("Failed to get VirtualService %s in %s namespace: %s", name, namespace, err)
+		}
 		log.Printf("VirtualService Hosts %+v Gateway %+v Http %+v\n", vs.Spec.Hosts, vs.Spec.Gateways, vs.Spec.Http)
+
+	} else {
+		log.Printf("List VirtualServiceis (namespace: %v)\n", namespace)
+		// Print all VirtualServices
+		vsList, err := client.NetworkingV1alpha3().VirtualServices(namespace).List(context.TODO(), v1.ListOptions{})
+		if err != nil {
+			log.Fatalf("Failed to get VirtualService in %s namespace: %s", namespace, err)
+		}
+		for i := range vsList.Items {
+			vs := vsList.Items[i]
+			log.Printf("VirtualService Hosts %+v Gateway %+v Http %+v\n", vs.Spec.Hosts, vs.Spec.Gateways, vs.Spec.Http)
+		}
 	}
 }
 
