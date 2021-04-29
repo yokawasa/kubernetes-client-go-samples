@@ -1,12 +1,13 @@
-.PHONY: clean all list-services list-nodes list-pods pods-in-service get-my-namespace
+.PHONY: clean all list-svc list-nodes list-pods pods-in-svc istio-list-vs
 
 .DEFAULT_GOAL := all
 
 TARGETS=\
-	list-services \
+	list-svc \
 	list-nodes \
 	list-pods \
-	pods-in-service
+	pods-in-svc \
+	istio-list-vs
 
 cur   := $(shell pwd)
 
