@@ -1,4 +1,4 @@
-.PHONY: clean all list-svc list-nodes list-pods pods-in-svc istio-list-vs
+.PHONY: clean all list-svc list-nodes list-pods pods-in-svc istio-get-vs istio-update-vs
 
 .DEFAULT_GOAL := all
 
@@ -7,7 +7,8 @@ TARGETS=\
 	list-nodes \
 	list-pods \
 	pods-in-svc \
-	istio-list-vs
+	istio-get-vs \
+	istio-update-vs
 
 cur   := $(shell pwd)
 
