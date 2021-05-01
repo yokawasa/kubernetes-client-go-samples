@@ -20,14 +20,6 @@ import (
 // api references
 // https://pkg.go.dev/istio.io/client-go/pkg/clientset/versioned
 
-/*
-route:<destination:<host:"zozo-front-api.zozo-front-001.svc.cluster.local" subset:"zozo-front-api" port:<number:8000 > > weight:33 >
-route:<destination:<host:"zozo-front-api.zozo-front-002.svc.cluster.local" subset:"zozo-front-api" port:<number:8000 > > weight:33 >
-route:<destination:<host:"zozo-front-api.zozo-front-003.svc.cluster.local" subset:"zozo-front-api" port:<number:8000 > > weight:34 >
-timeout:<seconds:3 >
-retries:<attempts:3 per_try_timeout:<seconds:2 > retry_on:"5xx,connect-failure" >
-*/
-
 var (
 	KubeConfig = flag.String("kubeconfig", "", "kubeconfig file")
 )
@@ -66,7 +58,6 @@ func main() {
 		newHttpRouteList         []*networkingv1alpha3.HTTPRoute
 		HTTPRouteDestinationList []*networkingv1alpha3.HTTPRouteDestination
 		newWeight                int32
-		//newHTTPRouteDestinationList []*networkingv1alpha3.HTTPRouteDestination
 	)
 
 	// create kubernetes client
@@ -83,10 +74,12 @@ func main() {
 	}
 	log.Printf("VirtualService Hosts %+v Gateway %+v Http %+v\n", vs.Spec.Hosts, vs.Spec.Gateways, vs.Spec.Http)
 
+	// Update VirtualService
+	// How to update VirtualService?
+	// - Set weight of your desitnation to 100%
+	// - Set the rest of the destination to 0%
 	httpRouteList = vs.Spec.GetHttp()
 	if httpRouteList != nil {
-		//httpRoute := httpRouteList[0]
-		//log.Printf("VirtualService 1st HTTP Route %+v\n", httpRoute)
 		for _, httpRoute := range httpRouteList {
 			log.Printf("VirtualService httpRoute %+v \n", httpRoute)
 			HTTPRouteDestinationList = httpRoute.Route
@@ -99,7 +92,6 @@ func main() {
 				HTTPRouteDestination := &networkingv1alpha3.HTTPRouteDestination{
 					Destination: dest.Destination,
 					Weight:      newWeight,
-					//Weight:      dest.Weight,
 				}
 				newHTTPRouteDestinationList = append(newHTTPRouteDestinationList, HTTPRouteDestination)
 			}
@@ -109,7 +101,6 @@ func main() {
 		}
 		vs.Spec.Http = newHttpRouteList
 
-		// Update virtualService
 		newvs, err := client.NetworkingV1alpha3().VirtualServices(namespace).Update(context.TODO(), vs, v1.UpdateOptions{})
 		if err != nil {
 			return
