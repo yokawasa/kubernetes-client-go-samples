@@ -1,4 +1,4 @@
-module list-services
+module list-svc
 
 go 1.13
 

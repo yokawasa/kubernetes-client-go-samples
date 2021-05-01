@@ -1,4 +1,4 @@
-module list-vs
+module istio-update-vs
 
 go 1.13
 

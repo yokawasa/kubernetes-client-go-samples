@@ -1,4 +1,4 @@
-module list-vs
+module istio-get-vs
 
 go 1.13
 

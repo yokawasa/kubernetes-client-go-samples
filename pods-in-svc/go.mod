@@ -1,4 +1,4 @@
-module pods-in-service
+module pods-in-svc
 
 go 1.13
 
