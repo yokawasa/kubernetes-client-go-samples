@@ -7,7 +7,7 @@ Update a VirtualService like this
 - Set the rest of the destination to 0%
 
 ```
-istio-update-vs -name <your-name> -namespace <your-namespace> -destination <your-destination>
+istio-update-vs -s <your-name> -n <your-namespace> -desthost <your-destination-host> -destsubset <your-destination-subset>
 ```
 
 Let's go through an example senario
@@ -55,7 +55,7 @@ spec:
 
 Then, you update the VirtualService using the tool
 ```
-istio-update-vs -name hoge-api -namespace testns -destination hoge-api.testns01.svc.cluster.local
+istio-update-vs -s hoge-api -n testns -desthost hoge-api.testns01.svc.cluster.local -destsubset hoge-api
 ```
 Let's check the updated VirtualService manifest
 ```yaml
@@ -94,3 +94,11 @@ spec:
       retryOn: 5xx,connect-failure
     timeout: 3s
 ```
+
+
+
+# References
+- https://istio.io/latest/blog/2019/announcing-istio-client-go/
+- https://github.com/istio/client-go/blob/release-1.9/cmd/example/client.go
+- https://github.com/Michael754267513/k8s-client-go/blob/k8s-note/istio/VirtualServices/main.go
+- https://pkg.go.dev/istio.io/client-go/pkg/clientset/versioned
