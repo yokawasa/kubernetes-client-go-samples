@@ -5,7 +5,6 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 
@@ -16,15 +15,13 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 )
 
-var (
-	KubeConfig = flag.String("kubeconfig", "", "kubeconfig file")
-)
+var KubeConfig = flag.String("kubeconfig", "", "kubeconfig file")
 
 func main() {
-	// create kubernetes client
 	client, err := newClient(*KubeConfig)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Printf("[ERROR] Failed to create client: %s\n", err)
+		os.Exit(1)
 	}
 
 	namespace := "default"
@@ -32,14 +29,14 @@ func main() {
 
 	svc, err := getService(appname, namespace, client)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(2)
+		fmt.Printf("[ERROR]: %v\n", err)
+		os.Exit(1)
 	}
 
 	pods, err := getPodsForService(svc, namespace, client)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(2)
+		fmt.Printf("[ERROR]: %v\n", err)
+		os.Exit(1)
 	}
 
 	for _, pod := range pods.Items {
@@ -59,8 +56,7 @@ func newClient(kubeConfigPath string) (kubernetes.Interface, error) {
 		kubeConfigPath = os.Getenv("KUBECONFIG")
 	}
 	if kubeConfigPath == "" {
-		// use default path(.kube/config) if kubeconfig path is not set
-		kubeConfigPath = clientcmd.RecommendedHomeFile
+		kubeConfigPath = clientcmd.RecommendedHomeFile // use default path(.kube/config)
 	}
 	kubeConfig, err := clientcmd.BuildConfigFromFlags("", kubeConfigPath)
 	if err != nil {
@@ -74,15 +70,16 @@ func getService(deployment string, namespace string, client kubernetes.Interface
 	listOptions := metav1.ListOptions{}
 	services, err := client.CoreV1().Services(namespace).List(context.TODO(), listOptions)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Printf("[ERROR] Failed to list services: %s\n", err)
+		return nil, err
 	}
 	for _, service := range services.Items {
 		if strings.Contains(service.Name, deployment) {
-			fmt.Fprintf(os.Stdout, "service name: %v\n", service.Name)
+			fmt.Printf("Service name: %v\n", service.Name)
 			return &service, nil
 		}
 	}
-	return nil, errors.New("cannot find service for deployment")
+	return nil, errors.New("Cannot find service for deployment")
 }
 
 func getPodsForService(svc *v1.Service, namespace string, client kubernetes.Interface) (*v1.PodList, error) {
