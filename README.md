@@ -43,7 +43,7 @@ cd kubernetes-client-go-samples
 # docker build using make
 make docker-build
 ```
-Or you can docker build directly using docker command
+Or you can docker build using docker command
 ```bash
 # docker build using docker command
 export docker_image_repo=kubernetes-client-go-samples
@@ -51,7 +51,7 @@ export docker_image_tag=latest
 docker build -t ${docker_image_repo}:${docker_image_tag} . --target executor
 ```
 
-Then, run the command like this
+Then, run the commands like this
 ```bash
 export docker_image_repo=kubernetes-client-go-samples
 export docker_image_tag=latest
