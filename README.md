@@ -36,16 +36,15 @@ Then, run the compiled binaries
 
 ### Docker
 
-To Run local docker build, run the following command.
+Docker build with the Makefile like this
 ```bash
 git clone git@github.com:yokawasa/kubernetes-client-go-samples.git
 cd kubernetes-client-go-samples
-
 # docker build using make
 make docker-build
-
-or 
-
+```
+Or you can docker build directly using docker command
+```bash
 # docker build using docker command
 export docker_image_repo=kubernetes-client-go-samples
 export docker_image_tag=latest
@@ -53,7 +52,7 @@ docker build -t ${docker_image_repo}:${docker_image_tag} . --target executor
 ```
 
 Then, run the command like this
-```
+```bash
 export docker_image_repo=kubernetes-client-go-samples
 export docker_image_tag=latest
 
