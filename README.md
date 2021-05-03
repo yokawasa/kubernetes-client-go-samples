@@ -100,7 +100,7 @@ Once you confirm the module build, add the name of module to `Makefile` on the p
 .PHONY: clean all list-services list-nodes list-pods ... <new-module>
 ...snip...
 TARGETS=\
-  list-services \
+  list-svc \
   list-nodes \
   list-pods \
   ...snip..
