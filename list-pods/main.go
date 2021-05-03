@@ -4,7 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"log"
 	"os"
 
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -13,15 +12,13 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 )
 
-var (
-	KubeConfig = flag.String("kubeconfig", "", "kubeconfig file")
-)
+var KubeConfig = flag.String("kubeconfig", "", "kubeconfig file")
 
 func main() {
-	// create kubernetes client
 	client, err := newClient(*KubeConfig)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Printf("[ERROR] Failed to create client: %s\n", err)
+		os.Exit(1)
 	}
 
 	// Get specific pod info
@@ -42,7 +39,7 @@ func main() {
 	list, err := client.CoreV1().Pods(namespace).List(context.TODO(), metav1.ListOptions{})
 
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error listing pods: %v", err)
+		fmt.Printf("[ERROR] listing pods: %v\n", err)
 		os.Exit(1)
 	}
 
@@ -62,8 +59,7 @@ func newClient(kubeConfigPath string) (kubernetes.Interface, error) {
 		kubeConfigPath = os.Getenv("KUBECONFIG")
 	}
 	if kubeConfigPath == "" {
-		// use default path(.kube/config) if kubeconfig path is not set
-		kubeConfigPath = clientcmd.RecommendedHomeFile
+		kubeConfigPath = clientcmd.RecommendedHomeFile // use default path(.kube/config)
 	}
 	kubeConfig, err := clientcmd.BuildConfigFromFlags("", kubeConfigPath)
 	if err != nil {
