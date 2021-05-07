@@ -1,10 +1,10 @@
 module istio-update-vs
 
-go 1.13
+go 1.14
 
 require (
-	istio.io/api v0.0.0-20210423190824-95fdcf6a6234
+	istio.io/api v0.0.0-20210507141635-02def630fd33
 	istio.io/client-go v1.9.4
-	k8s.io/apimachinery v0.20.1
+	k8s.io/apimachinery v0.21.0
 	k8s.io/client-go v0.20.1
 )
