@@ -6,10 +6,10 @@ A collection of Kubernetes and Istio client-go sample code
 
 ## Sample Lists
 
-- [List Services](list-svc)
-- [List Nodes](list-nodes)
-- [List Pods](list-pods)
-- [List Pods in Service](pods-in-svc)
+- [List Services](svclist)
+- [List Nodes](nodelist)
+- [List Pods](podlist)
+- [List Pods in Service](podlist-in-svc)
 - [Get Istio VirtualServices](istio-get-vs)
 - [Update Istio VirtualService](istio-update-vs)
 
@@ -26,10 +26,10 @@ make
 
 Then, run the compiled binaries
 ```bash
-./dist/list-svc
-./dist/list-nodes
-./dist/list-pods
-./dist/pods-in-svc
+./dist/svclist
+./dist/nodelist
+./dist/podlist
+./dist/podlist-in-svc
 ./dist/istio-get-vs -s <virtual service name> -n <namespace>
 ./dist/istio-update-vs -s <virtual service name> -n <namespace> -desthost <destination host> -destsubset <destination subset>
 ```
@@ -56,18 +56,18 @@ Then, run the commands like this
 export docker_image_repo=kubernetes-client-go-samples
 export docker_image_tag=latest
 
-docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/list-svc"
-docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/list-nodes"
-docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/list-pods"
-docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/pods-in-svc"
+docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/svclist"
+docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/nodelist"
+docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/podlist"
+docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/podlist-in-svc"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/istio-get-vs -s <virtual servide name> -n <namespace>"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/istio-update-vs -s <virtual service name> -n <namespace> -desthost <destination host> -destsubset <destination subset>"
 
 # You might need to volume mount your .aws dir if you are accessing to AWS EKS Kubernets cluster 
-docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/list-svc"
-docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/list-nodes"
-docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/list-pods"
-docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/pods-in-svc"
+docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/svclist"
+docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/nodelist"
+docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/podlist"
+docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/podlist-in-svc"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/istio-get-vs -s <virtual servide name> -n <namespace>"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/istio-update-vs -s <virtual service name> -n <namespace> -desthost <destination host> -destsubset <destination subset>"
 ```
@@ -100,9 +100,9 @@ Once you confirm the module build, add the name of module to `Makefile` on the p
 .PHONY: clean all list-services list-nodes list-pods ... <new-module>
 ...snip...
 TARGETS=\
-  list-svc \
-  list-nodes \
-  list-pods \
+  svclist \
+  nodelist \
+  podlist \
   ...snip..
   <new-module> \
 

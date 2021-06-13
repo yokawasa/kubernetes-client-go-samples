@@ -1,4 +1,4 @@
-module list-nodes
+module nodelist
 
 go 1.14
 

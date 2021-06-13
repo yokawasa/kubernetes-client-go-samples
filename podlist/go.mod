@@ -1,4 +1,4 @@
-module list-pods
+module podlist
 
 go 1.14
 

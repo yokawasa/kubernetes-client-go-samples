@@ -1,4 +1,4 @@
-module pods-in-svc
+module svclist 
 
 go 1.14
 

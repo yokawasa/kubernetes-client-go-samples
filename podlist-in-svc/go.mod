@@ -1,4 +1,4 @@
-module list-svc
+module podlist-in-svc
 
 go 1.14
 

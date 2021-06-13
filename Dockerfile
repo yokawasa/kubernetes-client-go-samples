@@ -14,9 +14,9 @@ RUN apt-get update && apt-get install -y python python-pip \
  && pip install awscli
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 WORKDIR /
-COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/list-svc /list-svc
-COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/list-nodes /list-nodes
-COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/list-pods /list-pods
-COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/pods-in-svc /pods-in-svc
+COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/svclist /svclist
+COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/nodelist /nodelist
+COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/podlist /podlist
+COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/podlist-in-svc /podlist-in-svc
 COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/istio-get-vs /istio-get-vs
 COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/istio-update-vs /istio-update-vs
