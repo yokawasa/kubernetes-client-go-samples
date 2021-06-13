@@ -1,6 +1,6 @@
 module istio-get-vs
 
-go 1.14
+go 1.16
 
 require (
 	istio.io/client-go v1.9.4

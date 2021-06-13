@@ -11,12 +11,11 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 )
 
-var KubeConfig = flag.String("kubeconfig", "", "kubeconfig file")
-
 func main() {
+	var kubeConfig = flag.String("kubeconfig", "", "kubeconfig file")
 	flag.Parse()
 
-	client, err := newClient(*KubeConfig)
+	client, err := newClient(*kubeConfig)
 	if err != nil {
 		fmt.Printf("[ERROR] Failed to create client: %s\n", err)
 		os.Exit(1)

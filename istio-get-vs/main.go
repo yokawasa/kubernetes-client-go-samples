@@ -12,8 +12,6 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 )
 
-var KubeConfig = flag.String("kubeconfig", "", "kubeconfig file")
-
 func usage() {
 	fmt.Println(usageText)
 	os.Exit(1)
@@ -30,15 +28,17 @@ Options:
 func main() {
 
 	var (
-		namespace string
-		vsname    string
+		namespace  string
+		vsname     string
+		kubeconfig string
 	)
 	flag.StringVar(&namespace, "n", "default", "namespace")
 	flag.StringVar(&vsname, "s", "", "VirtualService name")
+	flag.StringVar(&kubeconfig, "kubeconfig", "", "kubeconfig file")
 	flag.Usage = usage
 	flag.Parse()
 
-	client, err := newIstioClient(*KubeConfig)
+	client, err := newIstioClient(kubeconfig)
 	if err != nil {
 		fmt.Printf("[ERROR] Failed to create istio client: %s\n", err)
 		os.Exit(1)

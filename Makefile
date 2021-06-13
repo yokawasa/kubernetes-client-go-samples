@@ -23,8 +23,7 @@ clean:
 	rm -rf dist
 
 lint:
-	golint -set_exit_status $$(go list ./...)
-	go vet ./...
+	golint ./...
 
 docker-build:
 	set -x

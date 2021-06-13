@@ -12,8 +12,6 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 )
 
-var KubeConfig = flag.String("kubeconfig", "", "kubeconfig file")
-
 func usage() {
 	fmt.Println(usageText)
 	os.Exit(0)
@@ -36,11 +34,13 @@ func main() {
 		vsname     string
 		desthost   string
 		destsubset string
+		kubeconfig string
 	)
 	flag.StringVar(&vsname, "s", "", "virtual service name")
 	flag.StringVar(&namespace, "n", "default", "namespace")
 	flag.StringVar(&desthost, "desthost", "", "virtual service HTTP Route destination host name")
 	flag.StringVar(&destsubset, "destsubset", "", "virtual service HTTP Route destination subset name")
+	flag.StringVar(&kubeconfig, "kubeconfig", "", "kubeconfig file")
 	flag.Usage = usage
 	flag.Parse()
 
@@ -50,11 +50,11 @@ func main() {
 
 	var (
 		httpRouteList            []*networkingv1alpha3.HTTPRoute
-		newHttpRouteList         []*networkingv1alpha3.HTTPRoute
+		newHTTPRouteList         []*networkingv1alpha3.HTTPRoute
 		HTTPRouteDestinationList []*networkingv1alpha3.HTTPRouteDestination
 	)
 
-	client, err := newIstioClient(*KubeConfig)
+	client, err := newIstioClient(kubeconfig)
 	if err != nil {
 		fmt.Printf("[ERROR] Failed to create istio client: %s\n", err)
 		os.Exit(1)
@@ -100,9 +100,9 @@ func main() {
 			newHTTPRouteDestinationList = append(newHTTPRouteDestinationList, HTTPRouteDestination)
 		}
 		httpRoute.Route = newHTTPRouteDestinationList
-		newHttpRouteList = append(newHttpRouteList, httpRoute)
+		newHTTPRouteList = append(newHTTPRouteList, httpRoute)
 	}
-	vs.Spec.Http = newHttpRouteList
+	vs.Spec.Http = newHTTPRouteList
 
 	newvs, err := client.NetworkingV1alpha3().VirtualServices(namespace).Update(
 		context.TODO(),
