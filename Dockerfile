@@ -18,5 +18,6 @@ COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist
 COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/nodelist /nodelist
 COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/podlist /podlist
 COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/podlist-in-svc /podlist-in-svc
+COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/informer /informer
 COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/istio-get-vs /istio-get-vs
 COPY --from=builder /go/src/github.com/yokawasa/kubernetes-client-go-sample/dist/istio-update-vs /istio-update-vs

@@ -10,6 +10,7 @@ A collection of Kubernetes and Istio client-go sample code
 - [List Nodes](nodelist)
 - [List Pods](podlist)
 - [List Pods in Service](podlist-in-svc)
+- [Infomrer](informer)
 - [Get Istio VirtualServices](istio-get-vs)
 - [Update Istio VirtualService](istio-update-vs)
 
@@ -60,6 +61,7 @@ docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_re
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/nodelist"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/podlist"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/podlist-in-svc"
+docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/informer"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/istio-get-vs -s <virtual servide name> -n <namespace>"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config ${docker_image_repo}:${docker_image_tag} sh -c "/istio-update-vs -s <virtual service name> -n <namespace> -desthost <destination host> -destsubset <destination subset>"
 
@@ -68,6 +70,7 @@ docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/nodelist"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/podlist"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/podlist-in-svc"
+docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/informer"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/istio-get-vs -s <virtual servide name> -n <namespace>"
 docker run --rm -it -v ${HOME}/.kube/config:/root/.kube/config -v ${HOME}/.aws:/root/.aws ${docker_image_repo}:${docker_image_tag} sh -c "/istio-update-vs -s <virtual service name> -n <namespace> -desthost <destination host> -destsubset <destination subset>"
 ```
